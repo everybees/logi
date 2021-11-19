@@ -1,12 +1,13 @@
-from django.urls import path
-import users.views as uv
+from django.urls import path, include
+from rest_framework import routers
+from rest_framework.routers import DefaultRouter
 
+from users.views import UserViewSet
+
+router = DefaultRouter(trailing_slash=False)
+app_router = routers.DefaultRouter()
+app_router.register('', UserViewSet, basename='user')
 
 urlpatterns = [
-    path('create', uv.create_account),
-    path('login', uv.login),
-    path('create_profile', uv.create_profile),
-    path('update_profile', uv.update_profile),
-    path('view_profile', uv.view_profile),
-    path('change_password', uv.change_password),
+    path('', include(app_router.urls)),
 ]
